@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8F96874A-B89B-423C-97B6-91AE76049949}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Biskop.My.MyApplication</StartupObject>
-    <RootNamespace>Biskop</RootNamespace>
-    <AssemblyName>Biskop</AssemblyName>
+    <StartupObject>Bioskop.My.MyApplication</StartupObject>
+    <RootNamespace>Bioskop</RootNamespace>
+    <AssemblyName>Bioskop</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Biskop.xml</DocumentationFile>
+    <DocumentationFile>Bioskop.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Biskop.xml</DocumentationFile>
+    <DocumentationFile>Bioskop.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
