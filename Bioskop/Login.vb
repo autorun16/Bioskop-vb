@@ -17,7 +17,7 @@ Public Class Login
         If txtUsername.Text IsNot "" And txtPass.Text IsNot "" Then
             Try
                 koneksi.OpenConn()
-                Dim query As String = "SELECT * FROM pelanggan WHERE email = @user OR username = @user AND pass = @pass"
+                Dim query As String = "SELECT * FROM kasir WHERE email = @user OR username = @user AND pass = @pass"
 
                 Dim cmd As New MySqlCommand(query, koneksi.conn)
                 cmd.Parameters.AddWithValue("@user", txtUsername.Text)
@@ -27,7 +27,7 @@ Public Class Login
 
                 If reader.Read() Then
                     'MsgBox("Login Berhasil!", vbInformation, "Success")
-                    IdUser = CInt(reader("id"))
+                    IdUser = CInt(reader("idkasir"))
                     UserLogin = reader("nama").ToString()
                     Hide()
                     Index.Show()

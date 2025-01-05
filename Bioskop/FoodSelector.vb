@@ -71,7 +71,7 @@ Public Class FoodSelector
                             Dim qtyItem As New NumericUpDown()
                             qtyItem.Minimum = 0
                             qtyItem.Maximum = 100
-                            qtyItem.Tag = New Tuple(Of Integer, Integer)(readerItem("id"), readerItem("harga")) ' Menyimpan ID makanan di properti Tag
+                            qtyItem.Tag = New Tuple(Of Integer, Integer)(readerItem("idkonsumsi"), readerItem("harga")) ' Menyimpan ID makanan di properti Tag
                             qtyItem.Font = New Font("Segoe UI", 10.8!, FontStyle.Regular, GraphicsUnit.Point, CType(0, Byte))
                             qtyItem.TextAlign = HorizontalAlignment.Center
                             qtyItem.TabIndex = tabIndex

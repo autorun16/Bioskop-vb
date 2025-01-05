@@ -45,7 +45,7 @@ Public Class SeatSelector
                     chk.Tag = Chr(Asc("A") + i) & (j + 1).ToString()
 
                     koneksi.OpenConn()
-                    Dim query As String = "SELECT * FROM transaksi WHERE id_film = @idfilm AND seat = @seat"
+                    Dim query As String = "SELECT * FROM transaksi_tiket WHERE idfilm = @idfilm AND seat = @seat"
                     Dim cmd As New MySqlCommand(query, koneksi.conn)
                     cmd.Parameters.AddWithValue("@idfilm", Index.SelectedFilm.ToString())
                     cmd.Parameters.AddWithValue("@seat", chk.Tag)

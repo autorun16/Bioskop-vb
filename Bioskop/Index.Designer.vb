@@ -24,6 +24,7 @@ Partial Class Index
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Index))
         Me.btnKursi = New System.Windows.Forms.Button()
         Me.cntrTiket = New System.Windows.Forms.NumericUpDown()
         Me.lblTiket = New System.Windows.Forms.Label()
@@ -51,6 +52,10 @@ Partial Class Index
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.comboMetode = New System.Windows.Forms.ComboBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
+        Me.PrintPreviewDialog1 = New System.Windows.Forms.PrintPreviewDialog()
         CType(Me.cntrTiket, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -122,7 +127,7 @@ Partial Class Index
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.stripUser})
         Me.MenuStrip1.Location = New System.Drawing.Point(10, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(962, 31)
+        Me.MenuStrip1.Size = New System.Drawing.Size(990, 31)
         Me.MenuStrip1.TabIndex = 20
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -162,7 +167,7 @@ Partial Class Index
         Me.GroupBox1.Location = New System.Drawing.Point(573, 126)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Padding = New System.Windows.Forms.Padding(5)
-        Me.GroupBox1.Size = New System.Drawing.Size(396, 149)
+        Me.GroupBox1.Size = New System.Drawing.Size(424, 149)
         Me.GroupBox1.TabIndex = 22
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Total"
@@ -332,11 +337,47 @@ Partial Class Index
         Me.Column5.ReadOnly = True
         Me.Column5.Width = 85
         '
+        'comboMetode
+        '
+        Me.comboMetode.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.comboMetode.Font = New System.Drawing.Font("Segoe UI", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.comboMetode.FormattingEnabled = True
+        Me.comboMetode.Items.AddRange(New Object() {"--- Pilih Metode ---", "Cash", "QRIS", "DEBIT/CREDIT", "E-WALLET", "CRYPTO"})
+        Me.comboMetode.Location = New System.Drawing.Point(778, 291)
+        Me.comboMetode.Name = "comboMetode"
+        Me.comboMetode.Size = New System.Drawing.Size(219, 33)
+        Me.comboMetode.TabIndex = 29
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Segoe UI", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(568, 294)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(176, 25)
+        Me.Label6.TabIndex = 28
+        Me.Label6.Text = "Metode Pembayaran"
+        '
+        'PrintDocument1
+        '
+        '
+        'PrintPreviewDialog1
+        '
+        Me.PrintPreviewDialog1.AutoScrollMargin = New System.Drawing.Size(0, 0)
+        Me.PrintPreviewDialog1.AutoScrollMinSize = New System.Drawing.Size(0, 0)
+        Me.PrintPreviewDialog1.ClientSize = New System.Drawing.Size(400, 300)
+        Me.PrintPreviewDialog1.Enabled = True
+        Me.PrintPreviewDialog1.Icon = CType(resources.GetObject("PrintPreviewDialog1.Icon"), System.Drawing.Icon)
+        Me.PrintPreviewDialog1.Name = "PrintPreviewDialog1"
+        Me.PrintPreviewDialog1.Visible = False
+        '
         'Index
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(982, 495)
+        Me.ClientSize = New System.Drawing.Size(1010, 495)
+        Me.Controls.Add(Me.comboMetode)
+        Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.btnKonsumsi)
@@ -393,4 +434,8 @@ Partial Class Index
     Friend WithEvents Column3 As DataGridViewTextBoxColumn
     Friend WithEvents Column4 As DataGridViewTextBoxColumn
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
+    Friend WithEvents comboMetode As ComboBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents PrintDocument1 As Printing.PrintDocument
+    Friend WithEvents PrintPreviewDialog1 As PrintPreviewDialog
 End Class

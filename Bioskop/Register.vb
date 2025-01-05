@@ -17,7 +17,7 @@ Public Class Register
                 Try
                     koneksi.OpenConn()
 
-                    Dim query As String = "INSERT INTO pelanggan (nama, email, username, pass) VALUES (@nama, @email, @username, @pass)"
+                    Dim query As String = "INSERT INTO kasir (nama, email, username, pass) VALUES (@nama, @email, @username, @pass)"
 
                     Dim cmd As New MySqlCommand(query, koneksi.conn)
                     cmd.Parameters.AddWithValue("@nama", txtNama.Text)
