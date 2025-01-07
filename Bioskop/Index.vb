@@ -105,10 +105,11 @@ Public Class Index
                 koneksi.OpenConn()
                 Total = subTotalTiket + subTotalKonsumsi
 
-                Dim qTransaksi As String = "INSERT INTO transaksi_utama (idkasir, total, metode) VALUES (@idkasir, @total, @metode)"
+                Dim qTransaksi As String = "INSERT INTO transaksi_utama (idkasir, total,ppn, metode) VALUES (@idkasir, @total, @ppn, @metode)"
                 Dim cmdTransaksi As New MySqlCommand(qTransaksi, koneksi.conn)
                 cmdTransaksi.Parameters.AddWithValue("@idkasir", IdUser)
                 cmdTransaksi.Parameters.AddWithValue("@total", Total)
+                cmdTransaksi.Parameters.AddWithValue("@ppn", Total * 0.11)
                 cmdTransaksi.Parameters.AddWithValue("@metode", comboMetode.SelectedItem.ToString())
                 cmdTransaksi.ExecuteNonQuery()
 
@@ -141,14 +142,20 @@ Public Class Index
                 Dim response
                 response = MsgBox("Transaksi Berhasil", vbOKOnly, "Success")
                 If response = vbOK Then
-                    lblHargaTiket.Text = ""
-                    lblKursi.Text = ""
-                    cntrTiket.Value = 0
-                    lblTotal.Text = ""
-                    lblTotalMenu.Text = ""
-                    comboMetode.SelectedIndex = 0
-                    DataGridView1.Rows.Clear()
+                    ' Tampilkan dialog pratinjau cetakan
+                    PrintPreviewDialog1.Document = PrintDocument1
+                    If PrintPreviewDialog1.ShowDialog() = DialogResult.Cancel Then
+                        lblHargaTiket.Text = ""
+                        lblKursi.Text = ""
+                        cntrTiket.Value = 0
+                        lblTotal.Text = ""
+                        lblTotalMenu.Text = ""
+                        comboMetode.SelectedIndex = 0
+                        DataGridView1.Rows.Clear()
+                    End If
                 End If
+
+
             Else
                 MsgBox("Pilih Metode Pembayaran", vbCritical, "Error")
             End If
@@ -156,19 +163,12 @@ Public Class Index
         Catch ex As Exception
             MsgBox(ex.Message, vbCritical, "Error")
         End Try
-
-        ' Tampilkan dialog pratinjau cetakan
-
-        PrintPreviewDialog1.Document = PrintDocument1
-        PrintPreviewDialog1.ShowDialog()
     End Sub
 
     Private Sub AutoLayout()
         stripUser.Text = Login.UserLogin
         Label1.Left = (ClientSize.Width - Label1.Width) / 2
         comboMetode.SelectedIndex = 0
-
-        PrintDocument1.DefaultPageSettings.PaperSize = New Printing.PaperSize("A5", 400, 500)
     End Sub
 
     Private Sub btnKonsumsi_Click(sender As Object, e As EventArgs) Handles btnKonsumsi.Click
@@ -193,6 +193,7 @@ Public Class Index
 
     Private Sub PrintDocument1_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
         Dim font As New Font("Arial", 10)
+        Dim bold As New Font("Arial", 10, FontStyle.Bold)
         Dim fontBold As New Font("Arial", 12, FontStyle.Bold)
         Dim yPosition As Integer = 20 ' Awal posisi vertikal
         Dim startX As Integer = 50 ' Posisi awal X
@@ -220,11 +221,20 @@ Public Class Index
 
         ' Garis pemisah
         e.Graphics.DrawLine(Pens.Black, 50, yPosition, 350, yPosition)
+        yPosition += 20
+
+        e.Graphics.DrawString("Cashier", font, Brushes.Black, 50, yPosition)
+        e.Graphics.DrawString(NamaUser.ToString(), font, Brushes.Black, 260, yPosition)
+
         yPosition += 30
+
+        ' Garis pemisah
+        e.Graphics.DrawLine(Pens.Black, 50, yPosition, 350, yPosition)
+        yPosition += 20
 
         ' Body Struk
         For i As Integer = 0 To headers.Length - 1
-            e.Graphics.DrawString(headers(i), font, Brushes.Black, currentX, yPosition + 5)
+            e.Graphics.DrawString(headers(i), bold, Brushes.Black, currentX, yPosition + 5)
             currentX += colWidths(i)
         Next
 
@@ -234,9 +244,11 @@ Public Class Index
             e.Graphics.DrawString(boxFilm.Text.ToString(), font, Brushes.Black, 50, yPosition)
             e.Graphics.DrawString("x" & cntrTiket.Value.ToString(), font, Brushes.Black, 190, yPosition)
             e.Graphics.DrawString("Rp" & subTotalTiket.ToString("N0"), font, Brushes.Black, 280, yPosition)
-            yPosition += 30
+            yPosition += 20
 
             e.Graphics.DrawString(String.Join(", ", KursiTerpilih), font, Brushes.Black, 70, yPosition)
+            yPosition += 20
+            e.Graphics.DrawString("(Rp" & Harga.ToString("N0") & ")", font, Brushes.Black, 70, yPosition)
             yPosition += 50
         End If
 
@@ -250,8 +262,58 @@ Public Class Index
                 e.Graphics.DrawString("(Rp" & item.Item3.ToString("N0") & ")", font, Brushes.Black, 70, yPosition)
                 yPosition += 20
             Next
-            yPosition += 30
+            yPosition += 20
         End If
 
+        ' Garis pemisah
+        e.Graphics.DrawLine(Pens.Black, 50, yPosition, 350, yPosition)
+        yPosition += 20
+
+        e.Graphics.DrawString("Total (Before Tax)", font, Brushes.Black, 50, yPosition)
+        e.Graphics.DrawString("Rp" & Total.ToString("N0"), font, Brushes.Black, 280, yPosition)
+
+        yPosition += 20
+
+        e.Graphics.DrawString("VAT 11%", font, Brushes.Black, 50, yPosition)
+        e.Graphics.DrawString("Rp" & (Total * 0.11).ToString("N0"), font, Brushes.Black, 280, yPosition)
+
+        yPosition += 30
+
+        ' Garis pemisah
+        e.Graphics.DrawLine(Pens.Black, 50, yPosition, 350, yPosition)
+        yPosition += 20
+
+        e.Graphics.DrawString("Total ( + Tax)", font, Brushes.Black, 50, yPosition)
+        e.Graphics.DrawString("Rp" & ((Total * 0.11) + Total).ToString("N0"), font, Brushes.Black, 280, yPosition)
+
+        yPosition += 20
+
+        e.Graphics.DrawString("Payement Method", font, Brushes.Black, 50, yPosition)
+        e.Graphics.DrawString(comboMetode.SelectedItem.ToString(), font, Brushes.Black, 280, yPosition)
+
+        yPosition += 30
+
+        ' Garis pemisah
+        e.Graphics.DrawLine(Pens.Black, 50, yPosition, 350, yPosition)
+        yPosition += 30
+
+        ' Footer
+        Dim sf As New StringFormat()
+        sf.Alignment = StringAlignment.Center ' Mengatur teks rata kiri
+        sf.LineAlignment = StringAlignment.Near ' Rata atas
+        sf.Trimming = StringTrimming.Word ' Pemotongan kata (word wrap)
+        Dim rect As New RectangleF(50, yPosition, 300, cellHeight)
+
+        Dim FooterText As String = "TERIMA KASIH SUDAH MENONTON DAN BERBELANJA DI BIOSKOP KAMI"
+        Dim sizeFooterText As SizeF = e.Graphics.MeasureString(FooterText, fontBold)
+        e.Graphics.DrawString(FooterText, bold, Brushes.Black, rect, sf)
+    End Sub
+
+    Private Sub PrintDocument1_BeginPrint(sender As Object, e As Printing.PrintEventArgs) Handles PrintDocument1.BeginPrint
+        Dim totalHeight As Integer = 200 + 110 + selectedMenus.Count * 50 + 200
+
+        ' Buat ukuran kertas baru (lebar tetap, tinggi dinamis)
+        Dim customPaperSize As New Printing.PaperSize("CustomSize", 400, totalHeight) ' 850 = 8.5 inch lebar kertas
+        PrintDocument1.DefaultPageSettings.PaperSize = customPaperSize
     End Sub
 End Class
