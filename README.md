@@ -10,4 +10,4 @@ Fitur (Saat ini) :
 Fitur Under Development :
   1. Level previlage pada Akun
   2. View tambahan berdasarkan level akun
-  3. View untuk CRUD film dan konsumsi
+  3. View untuk CRUD daftar film, dan daftar konsumsi
